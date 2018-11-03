@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
+{% load pages_tags mezzanine_tags i18n staticfiles %}
+
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+
+{% ifinstalled mezzanine.blog %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+{% endifinstalled %}
+
+{% compress css %}
+<!-- Bootstrap core CSS -->
+<link href="{% static "vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+
+<!-- Custom fonts for this template -->
+<link href="{% static "vendor/fontawesome-free/css/all.min.css" %}" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+<!-- Custom styles for this template -->
+<link href="{% static "css/clean-blog.min.css" %}" rel="stylesheet">
+<link href="{% static "css/custom.css" %}" rel="stylesheet">
+
+
+
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/bootstrap-rtl.css" %}">
+{% endif %}
+{% ifinstalled cartridge.shop %}
+<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
+{% endif %}
+{% endifinstalled %}
+{% block extra_css %}{% endblock %}
+{% endcompress %}
+
+{% compress js %}
+<script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+{% block extra_js %}{% endblock %}
+{% endcompress %}
+
+<!--[if lt IE 9]>
+<script src="{% static "js/html5shiv.js" %}"></script>
+<script src="{% static "js/respond.min.js" %}"></script>
+<![endif]-->
+
+{% block extra_head %}{% endblock %}
+</head>
+
+<body id="{% block body_id %}body{% endblock %}">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      {% block navbar_title %}
+      {% if settings.SITE_TITLE %}<a class="navbar-brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
+      <!--  visible-lg  zobrazi tagline-->
+      {% if settings.SITE_TAGLINE %}<p class="navbar-text d-none">{{ settings.SITE_TAGLINE }}</p>{% endif %}
+      {% endblock%}
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        {% page_menu "pages/menus/primary.html" %}
+      </div>
+    </div>
+  </nav>
+
+
+
+{% block pageheader %} {% endblock %}
+{% block blogposthero %} {% endblock %}
+
+<!-- Page Header -->
+{% if request.path == '/' or '/blog/archive/' in request.path or '/blog/category/' in request.path %}
+<header class="masthead" style="background-image: url(' {{STATIC_URL}}img/home-bg.jpg')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>3D Printed</h1>
+          <span class="subheading">Vyvijíme na Open source</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+{% endif %}
+
+<div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+      {% block main %}{% endblock %}
+      </div>
+  </div>
+</div>
+<hr>
+<!-- Footer -->
+<footer id="myFooter" class="footer-distributed ">
+
+    <div class="footer-padding">
+
+
+        <div class="footer-left">
+
+          <h2>3D SOLUTIONS</h2>
+
+          <p class="footer-links">
+            <a href="/">Novinky</a>
+            ·
+            <a href="/price/">Ceník</a>
+            ·
+            <a href="/about/">O nás</a>
+
+          </p>
+
+
+        </div>
+
+        <div class="footer-center">
+
+          <div>
+            <i class="fa fa-map-marker"></i>
+            <p><span>Za Humny 390</span> Liberec, Česká republika</p>
+          </div>
+
+          <div>
+            <i class="fa fa-phone"></i>
+            <p>+420 731 409 691</p>
+          </div>
+
+          <div>
+            <i class="fa fa-envelope"></i>
+            <p><a href="mailto:support@evilcorp.com">3Dsolutions@info.cz</a></p>
+          </div>
+
+        </div>
+
+        <div class="footer-right">
+
+          <p class="footer-company-about">
+            <span>O naší společnosti</span>
+            Co se stane, když se sejde Strojař, Programátor a Mechatronik? <br><br>
+
+            My tomu říkáme <strong>3D SOLUTIONS</strong>.</p>
+
+
+
+        </div>
+        </div>
+        <!-- Here we use the Google Embed API to show Google Maps. -->
+        <!-- In order for this to work in your project you will need to generate a unique API key.  -->
+
+
+    <div class="social-networks">
+        <a href="#" class="twitter"><i class="fab fa-3x fa-twitter"></i></a>
+        <a href="#" class="facebook"><i class="fab fa-3x fa-facebook"></i></a>
+        <a href="#" class="google"><i class="fab fa-3x fa-google-plus"></i></a>
+    </div>
+    <div class="footer-copyright">
+        <p>MBM - 3D SOLUTIONS &copy; 2018</p>
+    </div>
+</footer>
+
+{% block footer_js %}
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+
+<!-- Custom scripts for this template -->
+<script src="{% static "js/clean-blog.min.js" %}"></script>
+<script src="{% static "js/retina.js" %}"></script>
+
+{% include "includes/footer_scripts.html" %}
+{% endblock %}
+
+</body>
+</html>

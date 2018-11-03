@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load mezzanine_tags keyword_tags %}
+
+{% block meta_title %}{{ page.meta_title }}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for page as keywords %}
+{% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+{% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+{{ page.description }}
+{% endmetablock %}{% endblock %}
+
+{% block title %}
+{% editable page.title %}{{ page.title }}{% endeditable %}
+{% endblock %}
+
+{% block pageheader %}
+<!-- Page Header -->
+<header class="masthead" style="{% if request.path == '/about/' %}background-image: url(' {{STATIC_URL}}img/about-bg.jpg'){% elif request.path == '/kontakt/'%}background-image: url(' {{STATIC_URL}}img/contact-bg.jpg') {% elif request.path == '/price/'%}background-image: url(' {{STATIC_URL}}img/post-bg.jpg') {% endif %}">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          {% if request.path == '/about/' %}
+          <h1>O nás</h1>
+          {% elif request.path == '/kontakt/'%}
+          <h1> Kontakty</h1>
+          {% elif request.path == '/price/'%}
+          <h1> Ceník</h1>
+          {% endif %}
+          <span class="subheading">Vyvijíme na Open source</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+{% block main %}
+{% endblock %}
